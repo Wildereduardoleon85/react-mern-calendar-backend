@@ -9,6 +9,10 @@ dotenv.config()
 // Public directory
 app.use(express.static('public'))
 
+// Body parse
+app.use(express.json())
+
+// Routes
 app.use('/api/auth', authRoutes)
 
 const port = process.env.PORT || 5000

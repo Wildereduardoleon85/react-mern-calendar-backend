@@ -3,9 +3,14 @@
  * @desc creates a new user
  */
 export const createUser = (req, res) => {
+  const { name, email, password } = req.body
+
   res.json({
     ok: true,
     msg: 'register',
+    name,
+    email,
+    password,
   })
 }
 
@@ -14,9 +19,13 @@ export const createUser = (req, res) => {
  * @desc login created user
  */
 export const loginUser = (req, res) => {
+  const { name, email } = req.body
+
   res.json({
     ok: true,
     msg: 'login',
+    name,
+    email,
   })
 }
 
