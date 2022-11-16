@@ -1,3 +1,5 @@
+import { validationResult } from 'express-validator'
+
 /**
  * @route POST 'api/auth/new'
  * @desc creates a new user
@@ -5,13 +7,22 @@
 export const createUser = (req, res) => {
   const { name, email, password } = req.body
 
-  res.json({
-    ok: true,
-    msg: 'register',
-    name,
-    email,
-    password,
-  })
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    res.status(400).json({
+      ok: false,
+      errors: errors.mapped(),
+    })
+  } else {
+    res.status(201).json({
+      ok: true,
+      msg: 'register',
+      name,
+      email,
+      password,
+    })
+  }
 }
 
 /**
@@ -19,14 +30,23 @@ export const createUser = (req, res) => {
  * @desc login created user
  */
 export const loginUser = (req, res) => {
-  const { name, email } = req.body
+  const { password, email } = req.body
 
-  res.json({
-    ok: true,
-    msg: 'login',
-    name,
-    email,
-  })
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    res.status(400).json({
+      ok: false,
+      errors: errors.mapped(),
+    })
+  } else {
+    res.status(200).json({
+      ok: true,
+      msg: 'login',
+      email,
+      password,
+    })
+  }
 }
 
 /**
