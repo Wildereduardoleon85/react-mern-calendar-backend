@@ -5,17 +5,29 @@ import { UserModel } from '../models/index.js'
  * @desc creates a new user
  */
 export const createUser = async (req, res) => {
-  const user = new UserModel(req.body)
+  const { email } = req.body
 
   try {
-    await user.save()
-    res.status(201).json({
-      ok: true,
-      msg: 'register',
-    })
+    const user = await UserModel.findOne({ email })
+    if (user) {
+      res.status(400).json({
+        ok: false,
+        msg: 'The user alredy exists',
+      })
+    } else {
+      const newUser = new UserModel(req.body)
+      await newUser.save()
+      res.status(201).json({
+        ok: true,
+        msg: 'User registered',
+      })
+    }
   } catch (error) {
     console.log(error)
-    res.status(500).json({ ok: false, msg: 'Something went wrong' })
+    res.status(500).json({
+      ok: false,
+      msg: 'Something went wrong',
+    })
   }
 }
 
