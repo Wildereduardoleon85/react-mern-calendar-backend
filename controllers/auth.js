@@ -1,11 +1,12 @@
 import { UserModel } from '../models/index.js'
+import bcrypt from 'bcryptjs'
 
 /**
  * @route POST 'api/auth/new'
  * @desc creates a new user
  */
 export const createUser = async (req, res) => {
-  const { email } = req.body
+  const { email, password } = req.body
 
   try {
     const user = await UserModel.findOne({ email })
@@ -16,7 +17,12 @@ export const createUser = async (req, res) => {
       })
     } else {
       const newUser = new UserModel(req.body)
+      const salt = bcrypt.genSaltSync()
+
+      newUser.password = bcrypt.hashSync(password, salt)
+
       await newUser.save()
+
       res.status(201).json({
         ok: true,
         msg: 'User registered',
