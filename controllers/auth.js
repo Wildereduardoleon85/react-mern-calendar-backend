@@ -1,27 +1,21 @@
-import { validationResult } from 'express-validator'
+import { UserModel } from '../models/index.js'
 
 /**
  * @route POST 'api/auth/new'
  * @desc creates a new user
  */
-export const createUser = (req, res) => {
-  const { name, email, password } = req.body
+export const createUser = async (req, res) => {
+  const user = new UserModel(req.body)
 
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    res.status(400).json({
-      ok: false,
-      errors: errors.mapped(),
-    })
-  } else {
+  try {
+    await user.save()
     res.status(201).json({
       ok: true,
       msg: 'register',
-      name,
-      email,
-      password,
     })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ ok: false, msg: 'Something went wrong' })
   }
 }
 
