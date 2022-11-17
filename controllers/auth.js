@@ -32,21 +32,12 @@ export const createUser = (req, res) => {
 export const loginUser = (req, res) => {
   const { password, email } = req.body
 
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    res.status(400).json({
-      ok: false,
-      errors: errors.mapped(),
-    })
-  } else {
-    res.status(200).json({
-      ok: true,
-      msg: 'login',
-      email,
-      password,
-    })
-  }
+  res.status(200).json({
+    ok: true,
+    msg: 'login',
+    email,
+    password,
+  })
 }
 
 /**
