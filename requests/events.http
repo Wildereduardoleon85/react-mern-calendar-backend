@@ -1,11 +1,9 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2Mzc3YTk4ZjQ3NTA5MzAyN2I2NmQ1ZjYiLCJuYW1lIjoiSm9zZSIsImlhdCI6MTY2ODgwMTM0NCwiZXhwIjoxNjY4ODA4NTQ0fQ.U5NEFSFi9irHfkPPjWTVXn-i_oYcf7sd8P5MtIjvsu4
-
 ### Get all events
-GET http://localhost:5000/api/events
+GET {{baseUrl}}/api/events
 x-token: {{token}}
 
 ### Create an event
-POST http://localhost:5000/api/events
+POST {{baseUrl}}/api/events
 Content-Type: application/json
 x-token: {{token}}
 
@@ -16,9 +14,9 @@ x-token: {{token}}
 }
 
 ### Update an event
-PUT http://localhost:5000/api/events/45
+PUT {{baseUrl}}/api/events/45
 x-token: {{token}}
 
 ### Delete an event
-DELETE http://localhost:5000/api/events/45
+DELETE {{baseUrl}}/api/events/45
 x-token: {{token}}

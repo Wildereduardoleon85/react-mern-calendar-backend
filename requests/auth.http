@@ -1,5 +1,5 @@
 ### Creates an user
-POST http://localhost:5000/api/auth/new
+POST {{baseUrl}}/api/auth/new
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### Login user
-POST http://localhost:5000/api/auth
+POST {{baseUrl}}/api/auth
 Content-Type: application/json
 
 {
@@ -18,5 +18,5 @@ Content-Type: application/json
 }
 
 ### Renew user token
-GET http://localhost:5000/api/auth/renew
-x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2Mzc3YTk4ZjQ3NTA5MzAyN2I2NmQ1ZjYiLCJuYW1lIjoiSm9zZSIsImlhdCI6MTY2ODc4NzIyMSwiZXhwIjoxNjY4Nzk0NDIxfQ.J9VFamEO5asiafnGNDbX3YLE9kTZCLt7H3m8u5MyC_Y
+GET {{baseUrl}}/api/auth/renew
+x-token: {{token}}
