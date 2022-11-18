@@ -16,7 +16,6 @@ export const validateJwt = (req, res, next) => {
     req.uid = uid
     req.name = name
   } catch (error) {
-    console.log(error)
     return res.status(401).json({
       ok: false,
       msg: 'Invalid token',

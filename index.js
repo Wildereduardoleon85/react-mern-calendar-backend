@@ -1,6 +1,6 @@
 import './utils/dotenv.js'
 import express from 'express'
-import authRoutes from './routes/auth.js'
+import { authRoutes, eventRoutes } from './routes/index.js'
 import { dbConnection } from './database/config.js'
 import cors from 'cors'
 
@@ -19,6 +19,7 @@ app.use(express.json())
 
 // Routes
 app.use('/api/auth', authRoutes)
+app.use('/api/events', eventRoutes)
 
 const port = process.env.PORT || 5000
 

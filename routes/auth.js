@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createUser, loginUser, renewToken } from '../controllers/auth.js'
+import { createUser, loginUser, renewToken } from '../controllers/index.js'
 import {
   createUserValidation,
   loginUserValidation,
@@ -12,4 +12,4 @@ authRoutes.post('/new', createUserValidation, createUser)
 authRoutes.post('/', loginUserValidation, loginUser)
 authRoutes.get('/renew', validateJwt, renewToken)
 
-export default authRoutes
+export { authRoutes }
