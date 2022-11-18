@@ -6,7 +6,14 @@ x-token: {{token}}
 
 ### Create an event
 POST http://localhost:5000/api/events
+Content-Type: application/json
 x-token: {{token}}
+
+{
+    "title": "cumpleaños del jefe",
+    "start": 0,
+    "end": 100000
+}
 
 ### Update an event
 PUT http://localhost:5000/api/events/45

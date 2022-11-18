@@ -14,6 +14,8 @@ export const getEvents = (req, res) => {
  * @desc Creates an event
  */
 export const createEvent = (req, res) => {
+  console.log(req.body)
+
   res.status(200).json({
     ok: true,
     msg: 'create event',
