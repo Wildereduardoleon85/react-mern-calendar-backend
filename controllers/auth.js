@@ -1,5 +1,6 @@
 import { UserModel } from '../models/index.js'
 import bcrypt from 'bcryptjs'
+import { generateJwt } from '../helpers/index.js'
 
 /**
  * @route POST 'api/auth/new'
@@ -10,24 +11,28 @@ export const createUser = async (req, res) => {
 
   try {
     const user = await UserModel.findOne({ email })
+
     if (user) {
-      res.status(400).json({
+      return res.status(400).json({
         ok: false,
         msg: 'The user alredy exists',
       })
-    } else {
-      const newUser = new UserModel(req.body)
-      const salt = bcrypt.genSaltSync()
-
-      newUser.password = bcrypt.hashSync(password, salt)
-
-      await newUser.save()
-
-      res.status(201).json({
-        ok: true,
-        msg: 'User registered',
-      })
     }
+
+    const newUser = new UserModel(req.body)
+    const salt = bcrypt.genSaltSync()
+
+    newUser.password = bcrypt.hashSync(password, salt)
+
+    await newUser.save()
+
+    const token = await generateJwt(newUser.id, newUser.name)
+
+    res.status(201).json({
+      ok: true,
+      msg: 'User registered',
+      token,
+    })
   } catch (error) {
     console.log(error)
     res.status(500).json({
@@ -41,15 +46,39 @@ export const createUser = async (req, res) => {
  * @route POST 'api/auth'
  * @desc login created user
  */
-export const loginUser = (req, res) => {
+export const loginUser = async (req, res) => {
   const { password, email } = req.body
 
-  res.status(200).json({
-    ok: true,
-    msg: 'login',
-    email,
-    password,
-  })
+  const setWrongCredentials = () => {
+    res.status(400).json({
+      ok: false,
+      msg: 'Wrong credentials',
+    })
+  }
+
+  try {
+    const user = await UserModel.findOne({ email })
+
+    if (!user) return setWrongCredentials()
+
+    const isPasswordValid = bcrypt.compareSync(password, user.password)
+
+    if (!isPasswordValid) return setWrongCredentials()
+
+    const token = await generateJwt(user.id, user.name)
+
+    return res.status(200).json({
+      ok: true,
+      masg: 'Login successful',
+      token,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      ok: false,
+      msg: 'Something went wrong',
+    })
+  }
 }
 
 /**

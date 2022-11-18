@@ -1,11 +1,10 @@
+import './utils/dotenv.js'
 import express from 'express'
-import dotenv from 'dotenv'
 import authRoutes from './routes/auth.js'
 import { dbConnection } from './database/config.js'
 
 // Initializations
 const app = express()
-dotenv.config()
 dbConnection()
 
 // Public directory
