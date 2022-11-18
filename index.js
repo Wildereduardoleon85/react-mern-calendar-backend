@@ -2,10 +2,14 @@ import './utils/dotenv.js'
 import express from 'express'
 import authRoutes from './routes/auth.js'
 import { dbConnection } from './database/config.js'
+import cors from 'cors'
 
 // Initializations
 const app = express()
 dbConnection()
+
+// Enable cors
+app.use(cors())
 
 // Public directory
 app.use(express.static('public'))
