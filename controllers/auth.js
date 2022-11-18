@@ -85,9 +85,13 @@ export const loginUser = async (req, res) => {
  * @route GET 'api/auth/renew'
  * @desc renew user token
  */
-export const renewToken = (req, res) => {
+export const renewToken = async (req, res) => {
+  const { uid, name } = req
+  const token = await generateJwt(uid, name)
+
   res.json({
     ok: true,
     msg: 'renew',
+    token,
   })
 }
