@@ -4,12 +4,13 @@ import {
   createUserValidation,
   loginUserValidation,
   validateJwt,
+  validateFields,
 } from '../middlewares/index.js'
 
 const authRoutes = Router()
 
-authRoutes.post('/new', createUserValidation, createUser)
-authRoutes.post('/', loginUserValidation, loginUser)
+authRoutes.post('/new', [createUserValidation, validateFields], createUser)
+authRoutes.post('/', [loginUserValidation, validateFields], loginUser)
 authRoutes.get('/renew', validateJwt, renewToken)
 
 export { authRoutes }
