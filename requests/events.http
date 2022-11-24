@@ -10,7 +10,9 @@ x-token: {{token}}
 {
     "title": "cumpleaños del jefe",
     "start": 45,
-    "end": 100000
+    "end": 100000,
+    "notes": "Buy cake",
+    "ABC": "123"
 }
 
 ### Update an event
