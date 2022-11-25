@@ -1,0 +1,8 @@
+{
+    "rest-client.environmentVariables": {
+        "development": {
+            "baseUrl": "",
+            "token": ""
+        }
+    }
+}

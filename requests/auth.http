@@ -3,8 +3,8 @@ POST {{baseUrl}}/api/auth/new
 Content-Type: application/json
 
 {
-    "name": "Jose",
-    "email": "jose@email.com",
+    "name": "Antonio",
+    "email": "antonio@email.com",
     "password": "123456"
 }
 

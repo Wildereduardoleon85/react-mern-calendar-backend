@@ -4,11 +4,20 @@ import { EventModel } from '../models/index.js'
  * @route GET 'api/events'
  * @desc Get all events
  */
-export const getEvents = (req, res) => {
-  res.status(200).json({
-    ok: true,
-    msg: 'get events',
-  })
+export const getEvents = async (req, res) => {
+  try {
+    const events = await EventModel.find().populate('user', 'name')
+    res.status(200).json({
+      ok: true,
+      events,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      ok: false,
+      msg: 'Something went wrong',
+    })
+  }
 }
 
 /**
@@ -39,11 +48,45 @@ export const createEvent = async (req, res) => {
  * @route POST 'api/events/:id'
  * @desc Updates an event
  */
-export const updateEvent = (req, res) => {
-  res.status(200).json({
-    ok: true,
-    msg: 'update event',
-  })
+export const updateEvent = async (req, res) => {
+  const { params, body, uid } = req
+
+  try {
+    const eventToBeUpdated = await EventModel.findById(params.id)
+
+    if (!eventToBeUpdated) {
+      return res.status(404).json({
+        ok: false,
+        msg: `The event with the id ${params.id} doesn't exists`,
+      })
+    }
+
+    if (uid !== String(eventToBeUpdated.user)) {
+      return res.status(401).json({
+        ok: false,
+        msg: "You aren't authorized to update this event",
+      })
+    }
+
+    const eventUpdated = await EventModel.findByIdAndUpdate(
+      params.id,
+      { ...body, user: uid },
+      {
+        new: true,
+      }
+    )
+
+    res.status(200).json({
+      ok: true,
+      eventUpdated,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      ok: false,
+      msg: 'Something went wrong',
+    })
+  }
 }
 
 /**

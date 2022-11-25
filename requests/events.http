@@ -8,16 +8,23 @@ Content-Type: application/json
 x-token: {{token}}
 
 {
-    "title": "cumpleaños del jefe",
+    "title": "Girlfirend's date",
     "start": 45,
     "end": 100000,
-    "notes": "Buy cake",
-    "ABC": "123"
+    "notes": "Bring flowers"
 }
 
 ### Update an event
-PUT {{baseUrl}}/api/events/45
+PUT {{baseUrl}}/api/events/637f5f98239a75353ae02eda
+Content-Type: application/json
 x-token: {{token}}
+
+{
+    "title": "Another event updated!!!!!!!!!!",
+    "start": 45,
+    "end": 100000,
+    "notes": "Whatever"
+}
 
 ### Delete an event
 DELETE {{baseUrl}}/api/events/45

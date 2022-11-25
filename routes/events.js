@@ -19,6 +19,9 @@ eventRoutes
   .route('/')
   .get(getEvents)
   .post([createEventValidation, validateFields], createEvent)
-eventRoutes.route('/:id').put(updateEvent).delete(deleteEvent)
+eventRoutes
+  .route('/:id')
+  .put([createEventValidation, validateFields], updateEvent)
+  .delete(deleteEvent)
 
 export { eventRoutes }
