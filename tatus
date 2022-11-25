@@ -1,0 +1,131 @@
+[33mcommit cf243f5c8628947f2cd28fe22722446772305aec[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 25 18:23:22 2022 -0300
+
+    feat: Delete event by id
+
+[33mcommit ae1ce5788ae91c4d621e5b7625adc031b31155ad[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 25 14:57:24 2022 -0300
+
+    feat: Updated event controller
+
+[33mcommit 161613e3ad4f702129481ef940c363c18efe1919[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Wed Nov 23 21:33:34 2022 -0300
+
+    feat: Store event in the database
+
+[33mcommit db2ad123e0a1ffb94879da532db58645dec0512a[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Wed Nov 23 20:40:58 2022 -0300
+
+    feat: Add date validation
+
+[33mcommit 24c65223fbeb5c56d11d07fdaf313deac7db1aa1[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 18 17:41:46 2022 -0300
+
+    chore: Add env variables for RESTclient extension
+
+[33mcommit 85b8809eb4fc46382b837eaddd95b8d350a2f0a7[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 18 17:23:52 2022 -0300
+
+    feat: Add event model
+
+[33mcommit 585310e2cf98f4b6e89d8d3663cf696ca57cc5f5[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 18 17:09:11 2022 -0300
+
+    feat: Add events routes
+
+[33mcommit 742a23b6e69781166b2c9684125541efdbca92e0[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 18 13:30:12 2022 -0300
+
+    feat: Add cors
+
+[33mcommit a75119bfe9e581b8752848b8621adc7f8eb90f1d[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 18 13:23:02 2022 -0300
+
+    feat: Renew token
+
+[33mcommit 618e7eb86f47867f0ed0c73537db8067ed4d1639[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 18 12:32:31 2022 -0300
+
+    feat: Add jsonwebtoken validation
+
+[33mcommit 9f1ff5508cdd48323f31a2313d54d41ad6f27bc5[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Thu Nov 17 15:51:24 2022 -0300
+
+    feat: Encrypt user password
+
+[33mcommit 68cbf2bfd3ea13b1b2c7447550d0d847da1d1ad6[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Thu Nov 17 13:38:20 2022 -0300
+
+    feat: Add user validation when creating a new user
+
+[33mcommit 9625fa8ac4119afcab1f824cd60a91d112f994cb[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Thu Nov 17 09:39:46 2022 -0300
+
+    feat: Add user model schema
+
+[33mcommit 67e14da6ad40ca37e4207f98db8e27ec1b965b9c[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Wed Nov 16 23:07:29 2022 -0300
+
+    feat: Database configuration
+
+[33mcommit bee0011928dc9ad7004eee576652d48f302af5ad[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Wed Nov 16 22:16:45 2022 -0300
+
+    feat: Add custom middlewares
+
+[33mcommit adbfbf89b079cb57487e77c924771b57bfc0ec23[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Wed Nov 16 18:42:11 2022 -0300
+
+    feat: Manage errors with express-validator
+
+[33mcommit 5819d35f8384bf6f48a492b74667da7683f319a5[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Wed Nov 16 16:51:47 2022 -0300
+
+    feat: Get body from request
+
+[33mcommit 72162af883d3149bf47dc06e4d83f65fa203cbda[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 11 18:08:35 2022 -0300
+
+    feat: Add controller for auth routes
+
+[33mcommit 08097aa6597c0d51ae6ec4cb851c1affcbf5a863[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 11 17:43:44 2022 -0300
+
+    feat: Add auth routes
+
+[33mcommit 3f0c012619867e0f6befa499ff7c189dd29cfa35[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 11 14:28:28 2022 -0300
+
+    feat: Add dotenv & public directory
+
+[33mcommit a98155a8247968e4ec09bb1cd9ec8c06dbe63c70[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 11 14:16:08 2022 -0300
+
+    feat: Add express server
+
+[33mcommit e995be18b4e4ed9c97b9f4ab23699fa361940b00[m
+Author: Wilder Leon <wleona@ripley.com>
+Date:   Fri Nov 11 13:33:42 2022 -0300
+
+    first commit
