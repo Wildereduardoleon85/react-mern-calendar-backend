@@ -93,9 +93,37 @@ export const updateEvent = async (req, res) => {
  * @route DELETE 'api/events/:id'
  * @desc Deletes an event
  */
-export const deleteEvent = (req, res) => {
-  res.status(200).json({
-    ok: true,
-    msg: 'delete event',
-  })
+export const deleteEvent = async (req, res) => {
+  const { params, uid } = req
+
+  try {
+    const eventToBeDeleted = await EventModel.findById(params.id)
+
+    if (!eventToBeDeleted) {
+      return res.status(404).json({
+        ok: false,
+        msg: `The event with the id ${params.id} doesn't exists`,
+      })
+    }
+
+    if (uid !== String(eventToBeDeleted.user)) {
+      return res.status(401).json({
+        ok: false,
+        msg: "You aren't authorized to delete this event",
+      })
+    }
+
+    await EventModel.deleteOne({ _id: params.id })
+
+    res.status(200).json({
+      ok: true,
+      msg: `Event with id ${params.id} deleted`,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      ok: false,
+      msg: 'Something went wrong',
+    })
+  }
 }

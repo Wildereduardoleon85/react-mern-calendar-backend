@@ -27,5 +27,5 @@ x-token: {{token}}
 }
 
 ### Delete an event
-DELETE {{baseUrl}}/api/events/45
+DELETE {{baseUrl}}/api/events/637f5f98239a75353ae02eda
 x-token: {{token}}

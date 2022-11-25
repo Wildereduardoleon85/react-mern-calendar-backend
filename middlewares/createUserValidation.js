@@ -1,4 +1,5 @@
 import { check } from 'express-validator'
+import { validateFields } from './index.js'
 
 export const createUserValidation = [
   check('name', 'The name is required').not().isEmpty(),
@@ -6,4 +7,5 @@ export const createUserValidation = [
   check('password', 'The password must be at least 6 characters').isLength({
     min: 6,
   }),
+  validateFields,
 ]
