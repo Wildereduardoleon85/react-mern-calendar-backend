@@ -30,7 +30,8 @@ export const createUser = async (req, res) => {
 
     res.status(201).json({
       ok: true,
-      msg: 'User registered',
+      name: newUser.name,
+      uid: newUser.id,
       token,
     })
   } catch (error) {
@@ -50,7 +51,7 @@ export const loginUser = async (req, res) => {
   const { password, email } = req.body
 
   const setWrongCredentials = () => {
-    res.status(400).json({
+    res.status(401).json({
       ok: false,
       msg: 'Wrong credentials',
     })
@@ -69,7 +70,8 @@ export const loginUser = async (req, res) => {
 
     return res.status(200).json({
       ok: true,
-      masg: 'Login successful',
+      name: user.name,
+      uid: user.id,
       token,
     })
   } catch (error) {
