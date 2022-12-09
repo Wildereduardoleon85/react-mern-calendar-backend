@@ -13,10 +13,11 @@ export const createUser = async (req, res) => {
     const user = await UserModel.findOne({ email })
 
     if (user) {
-      return res.status(400).json({
+      res.status(400).json({
         ok: false,
         msg: 'The user alredy exists',
       })
+      return
     }
 
     const newUser = new UserModel(req.body)
@@ -60,15 +61,20 @@ export const loginUser = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email })
 
-    if (!user) return setWrongCredentials()
+    if (!user) {
+      setWrongCredentials()
+      return
+    }
 
     const isPasswordValid = bcrypt.compareSync(password, user.password)
-
-    if (!isPasswordValid) return setWrongCredentials()
-
     const token = await generateJwt(user.id, user.name)
 
-    return res.status(200).json({
+    if (!isPasswordValid) {
+      setWrongCredentials()
+      return
+    }
+
+    res.status(200).json({
       ok: true,
       name: user.name,
       uid: user.id,

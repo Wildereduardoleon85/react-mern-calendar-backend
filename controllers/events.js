@@ -25,7 +25,7 @@ export const getEvents = async (req, res) => {
  * @desc Creates an event
  */
 export const createEvent = async (req, res) => {
-  const event = { ...req.body, user: req.uid }
+  const event = { ...req.body, user: { id: req.uid, name: req.name } }
   const newEvent = new EventModel(event)
 
   try {
