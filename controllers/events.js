@@ -1,129 +1,131 @@
-import { EventModel } from '../models/index.js'
+const { response } = require('express');
+const Evento = require('../models/Evento');
 
-/**
- * @route GET 'api/events'
- * @desc Get all events
- */
-export const getEvents = async (req, res) => {
-  try {
-    const events = await EventModel.find().populate('user', 'name')
-    res.status(200).json({
-      ok: true,
-      events,
-    })
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({
-      ok: false,
-      msg: 'Something went wrong',
-    })
-  }
+const getEventos = async( req, res = response ) => {
+
+    const eventos = await Evento.find()
+                                .populate('user','name');
+
+    res.json({
+        ok: true,
+        eventos
+    });
 }
 
-/**
- * @route POST 'api/events'
- * @desc Creates an event
- */
-export const createEvent = async (req, res) => {
-  const event = { ...req.body, user: { id: req.uid, name: req.name } }
-  const newEvent = new EventModel(event)
+const crearEvento = async ( req, res = response ) => {
 
-  try {
-    await newEvent.save()
-    res.status(201).json({
-      ok: true,
-      msg: 'Event created',
-      data: newEvent,
-    })
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({
-      ok: false,
-      msg: 'Something went wrong',
-    })
-  }
+    const evento = new Evento( req.body );
+
+    try {
+
+        evento.user = req.uid;
+        
+        const eventoGuardado = await evento.save();
+
+        res.json({
+            ok: true,
+            evento: eventoGuardado
+        })
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
 }
 
-/**
- * @route POST 'api/events/:id'
- * @desc Updates an event
- */
-export const updateEvent = async (req, res) => {
-  const { params, body, uid } = req
+const actualizarEvento = async( req, res = response ) => {
+    
+    const eventoId = req.params.id;
+    const uid = req.uid;
 
-  try {
-    const eventToBeUpdated = await EventModel.findById(params.id)
+    try {
 
-    if (!eventToBeUpdated) {
-      return res.status(404).json({
-        ok: false,
-        msg: `The event with the id ${params.id} doesn't exists`,
-      })
+        const evento = await Evento.findById( eventoId );
+
+        if ( !evento ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Evento no existe por ese id'
+            });
+        }
+
+        if ( evento.user.toString() !== uid ) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No tiene privilegio de editar este evento'
+            });
+        }
+
+        const nuevoEvento = {
+            ...req.body,
+            user: uid
+        }
+
+        const eventoActualizado = await Evento.findByIdAndUpdate( eventoId, nuevoEvento, { new: true } );
+
+        res.json({
+            ok: true,
+            evento: eventoActualizado
+        });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
     }
 
-    if (uid !== String(eventToBeUpdated.user)) {
-      return res.status(401).json({
-        ok: false,
-        msg: "You aren't authorized to update this event",
-      })
-    }
-
-    const eventUpdated = await EventModel.findByIdAndUpdate(
-      params.id,
-      { ...body, user: uid },
-      {
-        new: true,
-      }
-    )
-
-    res.status(200).json({
-      ok: true,
-      eventUpdated,
-    })
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({
-      ok: false,
-      msg: 'Something went wrong',
-    })
-  }
 }
 
-/**
- * @route DELETE 'api/events/:id'
- * @desc Deletes an event
- */
-export const deleteEvent = async (req, res) => {
-  const { params, uid } = req
+const eliminarEvento = async( req, res = response ) => {
 
-  try {
-    const eventToBeDeleted = await EventModel.findById(params.id)
+    const eventoId = req.params.id;
+    const uid = req.uid;
 
-    if (!eventToBeDeleted) {
-      return res.status(404).json({
-        ok: false,
-        msg: `The event with the id ${params.id} doesn't exists`,
-      })
+    try {
+
+        const evento = await Evento.findById( eventoId );
+
+        if ( !evento ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Evento no existe por ese id'
+            });
+        }
+
+        if ( evento.user.toString() !== uid ) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No tiene privilegio de eliminar este evento'
+            });
+        }
+
+
+        await Evento.findByIdAndDelete( eventoId );
+
+        res.json({ ok: true });
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
     }
 
-    if (uid !== String(eventToBeDeleted.user)) {
-      return res.status(401).json({
-        ok: false,
-        msg: "You aren't authorized to delete this event",
-      })
-    }
+}
 
-    await EventModel.deleteOne({ _id: params.id })
 
-    res.status(200).json({
-      ok: true,
-      msg: `Event with id ${params.id} deleted`,
-    })
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({
-      ok: false,
-      msg: 'Something went wrong',
-    })
-  }
+module.exports = {
+    getEventos,
+    crearEvento,
+    actualizarEvento,
+    eliminarEvento
 }

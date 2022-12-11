@@ -1,26 +1,37 @@
-import './utils/dotenv.js'
-import express from 'express'
-import { authRoutes, eventRoutes } from './routes/index.js'
-import { dbConnection } from './database/config.js'
-import cors from 'cors'
+const express = require('express');
+require('dotenv').config();
+const cors = require('cors');
+const { dbConnection } = require('./database/config');
 
-// Initializations
-const app = express()
-dbConnection()
+// Crear el servidor de express
+const app = express();
 
-// Enable cors
+// Base de datos
+dbConnection();
+
+// CORS
 app.use(cors())
 
-// Public directory
-app.use(express.static('public'))
+// Directorio Público
+app.use( express.static('public') );
 
-// Body parse
-app.use(express.json())
+// Lectura y parseo del body
+app.use( express.json() );
 
-// Routes
-app.use('/api/auth', authRoutes)
-app.use('/api/events', eventRoutes)
+// Rutas
+app.use('/api/auth', require('./routes/auth') );
+app.use('/api/events', require('./routes/events') );
 
-const port = process.env.PORT || 5000
 
-app.listen(port, () => console.log(`Server running in port ${port}`))
+
+
+// Escuchar peticiones
+app.listen( process.env.PORT, () => {
+    console.log(`Servidor corriendo en puerto ${ process.env.PORT }`);
+});
+
+
+
+
+
+

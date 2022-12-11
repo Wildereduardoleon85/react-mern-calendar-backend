@@ -1,15 +1,45 @@
-import { Router } from 'express'
-import { createUser, loginUser, renewToken } from '../controllers/index.js'
-import {
-  createUserValidation,
-  loginUserValidation,
-  validateJwt,
-} from '../middlewares/index.js'
+/*
+    Rutas de Usuarios / Auth
+    host + /api/auth
+*/
+const { Router } = require('express')
+const { check } = require('express-validator')
+const { validarCampos } = require('../middlewares/validar-campos')
+const {
+  crearUsuario,
+  loginUsuario,
+  revalidarToken,
+} = require('../controllers/auth')
+const { validarJWT } = require('../middlewares/validar-jwt')
 
-const authRoutes = Router()
+const router = Router()
 
-authRoutes.post('/new', createUserValidation, createUser)
-authRoutes.post('/', loginUserValidation, loginUser)
-authRoutes.get('/renew', validateJwt, renewToken)
+router.post(
+  '/new',
+  [
+    // middlewares
+    check('name', 'El nombre es obligatorio').not().isEmpty(),
+    check('email', 'El email es obligatorio').isEmail(),
+    check('password', 'El password debe de ser de 6 caracteres').isLength({
+      min: 6,
+    }),
+    validarCampos,
+  ],
+  crearUsuario
+)
 
-export { authRoutes }
+router.post(
+  '/',
+  [
+    check('email', 'El email es obligatorio').isEmail(),
+    check('password', 'El password debe de ser de 6 caracteres').isLength({
+      min: 6,
+    }),
+    validarCampos,
+  ],
+  loginUsuario
+)
+
+router.get('/renew', validarJWT, revalidarToken)
+
+module.exports = router
